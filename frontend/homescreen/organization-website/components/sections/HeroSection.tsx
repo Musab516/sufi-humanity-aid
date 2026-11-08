@@ -1,129 +1,187 @@
-"use client";
 
-import { useState } from "react";
-
-const slides = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    title: "EMPOWERING COMMUNITIES",
-    subtitle: "CREATING IMPACT • BUILDING SUSTAINABLE LIVES",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b",
-    title: "BUILDING STRONGER COMMUNITIES",
-    subtitle: "HELPING PEOPLE • CHANGING LIVES",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
-    title: "CREATING LASTING IMPACT",
-    subtitle: "TOGETHER WE CAN MAKE A DIFFERENCE",
-  },
-];
+import Image from "next/image";
+import Link from "next/link";
+import { HandHeart, ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const previousSlide = () => {
-    setCurrentSlide((current) =>
-      current === 0 ? slides.length - 1 : current - 1
-    );
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((current) =>
-      current === slides.length - 1 ? 0 : current + 1
-    );
-  };
-
   return (
-    <section className="relative w-full overflow-hidden">
-      {/* Carousel track */}
-      <div
-        className="flex transition-transform duration-700 ease-in-out"
-        style={{
-          transform: `translateX(-${currentSlide * 100}%)`,
-        }}
-      >
-        {slides.map((slide) => (
-          <div
-            key={slide.title}
-            className="relative min-w-full shrink-0"
-          >
-            {/* Image */}
-            <div
-              className="relative h-[400px] w-full bg-cover bg-center md:h-[450px]"
+    <section className="relative w-full overflow-hidden bg-[#f5f2e9]">
+
+      {/* DESKTOP HERO */}
+      <div className="relative hidden min-h-[540px] lg:block">
+
+        {/* Sharp photograph — LEFT */}
+        <div
+          className="absolute inset-y-0 left-0 z-[1] w-[66%]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, black 0%, black 76%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, black 0%, black 76%, transparent 100%)",
+          }}
+        >
+          <Image
+            src="/images/water-hand-pump.jpg"
+            alt="Children and community members using a newly installed water hand pump"
+            fill
+            priority
+            sizes="66vw"
+            className="object-cover object-[center_45%]"
+          />
+        </div>
+
+        {/* Subtle blur around the image edge */}
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[66%]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 70%, black 88%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 70%, black 88%, transparent 100%)",
+          }}
+        >
+          <Image
+            src="/images/water-hand-pump.jpg"
+            alt=""
+            fill
+            sizes="66vw"
+            className="scale-105 object-cover object-[center_45%] blur-[7px] opacity-40"
+          />
+        </div>
+
+        {/* Smooth fade into cream background */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[3]"
+          style={{
+            background:
+              "linear-gradient(to right, transparent 43%, rgba(245,242,233,0.08) 53%, rgba(245,242,233,0.45) 64%, rgba(245,242,233,0.85) 74%, #f5f2e9 83%)",
+          }}
+        />
+
+        {/* TEXT — RIGHT */}
+        <div className="relative z-10 ml-auto flex min-h-[540px] w-[47%] items-center justify-end pr-12 pl-6 xl:pr-16">
+          <div className="ml-auto w-full max-w-xl text-right">
+
+            {/* Eyebrow */}
+            <p
+              className="text-xs font-medium uppercase tracking-[0.22em] text-[#69716c]"
               style={{
-                backgroundImage: `url(${slide.image})`,
+                fontFamily: "var(--font-poppins), sans-serif",
               }}
             >
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-black/30" />
+              People | Communities |
+              <br />
+              A Brighter Tomorrow
+            </p>
 
-              {/* Content */}
-              <div className="relative z-10 flex h-full items-center">
-                <div className="mx-auto w-full max-w-7xl px-6 md:px-12">
-                  <div className="max-w-2xl text-white">
-                    <h1 className="text-4xl font-bold md:text-6xl">
-                      {slide.title}
-                    </h1>
+            {/* Main heading */}
+            <h1
+              className="mt-6 text-5xl font-semibold leading-[1.08] tracking-tight text-[#073d29] xl:text-[62px]"
+              style={{
+                fontFamily: "var(--font-libre-franklin), sans-serif",
+              }}
+            >
+              Real Change
+              <br />
+              Lasts <span className="text-[#d2b166]">Longer.</span>
+            </h1>
 
-                    <p className="mt-4 text-lg font-semibold text-[#d8c27a] md:text-2xl">
-                      {slide.subtitle}
-                    </p>
+            {/* Description */}
+            <p className="ml-auto mt-6 max-w-md text-right text-base leading-7 text-[#515d56]">
+              Creating sustainable change through education, clean water,
+              housing and community development.
+            </p>
 
-                    <button
-                      type="button"
-                      className="mt-7 rounded-md border-2 border-[#d8c27a] px-6 py-3 font-semibold text-white transition hover:bg-[#d8c27a] hover:text-[#073d29]"
-                    >
-                      OUR INITIATIVES
-                    </button>
-                  </div>
-                </div>
-              </div>
+            {/* Buttons */}
+            <div className="mt-8 flex flex-wrap items-center justify-end gap-3">
+
+              <Link
+                href="/#donate"
+                className="inline-flex items-center gap-2 rounded-full bg-[#d2b166] px-6 py-3.5 text-xs font-semibold text-[#073d29] transition hover:bg-[#c4a052]"
+              >
+                <HandHeart size={17} strokeWidth={2} />
+                Donate Now
+              </Link>
+
+              <Link
+                href="/our-work"
+                className="inline-flex items-center gap-2 rounded-full border border-[#073d29] px-6 py-3.5 text-xs font-semibold text-[#073d29] transition hover:bg-[#073d29] hover:text-white"
+              >
+                Explore Our Work
+                <ArrowRight size={15} />
+              </Link>
+
             </div>
           </div>
-        ))}
+        </div>
       </div>
 
-      {/* Previous button */}
-      <button
-        type="button"
-        onClick={previousSlide}
-        aria-label="Previous slide"
-        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 px-4 py-2 text-4xl text-white transition hover:bg-black/70"
-      >
-        ‹
-      </button>
+      {/* MOBILE HERO */}
+      <div className="lg:hidden">
 
-      {/* Next button */}
-      <button
-        type="button"
-        onClick={nextSlide}
-        aria-label="Next slide"
-        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 px-4 py-2 text-4xl text-white transition hover:bg-black/70"
-      >
-        ›
-      </button>
-
-      {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-3">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.title}
-            type="button"
-            onClick={() => setCurrentSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-all ${
-              index === currentSlide
-                ? "scale-125 bg-[#d8c27a]"
-                : "bg-white/70 hover:bg-white"
-            }`}
+        {/* Project photograph */}
+        <div className="relative h-[360px] overflow-hidden sm:h-[440px]">
+          <Image
+            src="/images/water-hand-pump.jpg"
+            alt="Community members using a water hand pump"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_40%]"
           />
-        ))}
+        </div>
+
+        {/* Mobile content */}
+        <div className="relative -mt-8 rounded-t-[28px] bg-[#f5f2e9] px-6 pb-12 pt-10 sm:px-10">
+
+          <p
+            className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#69716c]"
+            style={{
+              fontFamily: "var(--font-poppins), sans-serif",
+            }}
+          >
+            People | Communities | A Brighter Tomorrow
+          </p>
+
+          <h1
+            className="mt-5 text-4xl font-semibold leading-tight text-[#073d29] sm:text-5xl"
+            style={{
+              fontFamily: "var(--font-libre-franklin), sans-serif",
+            }}
+          >
+            Real Change
+            <br />
+            Lasts <span className="text-[#d2b166]">Longer.</span>
+          </h1>
+
+          <p className="mt-5 max-w-md text-sm leading-6 text-[#515d56]">
+            Creating sustainable change through education, clean water,
+            housing and community development.
+          </p>
+
+          {/* Mobile buttons */}
+          <div className="mt-7 flex flex-wrap gap-3">
+
+            <Link
+              href="/#donate"
+              className="inline-flex items-center gap-2 rounded-full bg-[#d2b166] px-5 py-3 text-xs font-semibold text-[#073d29] transition hover:bg-[#c4a052]"
+            >
+              <HandHeart size={17} />
+              Donate Now
+            </Link>
+
+            <Link
+              href="/our-work"
+              className="inline-flex items-center gap-2 rounded-full border border-[#073d29] px-5 py-3 text-xs font-semibold text-[#073d29] transition hover:bg-[#073d29] hover:text-white"
+            >
+              Explore Our Work
+              <ArrowRight size={15} />
+            </Link>
+
+          </div>
+        </div>
       </div>
+
     </section>
   );
 }
