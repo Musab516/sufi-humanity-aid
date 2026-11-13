@@ -10,9 +10,9 @@ export default function Footer() {
 
           {/* Logo / About */}
           <div>
-            <div className="relative h-20 w-52 bg-white">
+            <div className="relative h-20 w-52">
               <Image
-                src="/images/logo2.jpg"
+                src="/images/logo-light.png"
                 alt="Sufi Humanity Aid International"
                 fill
                 className="object-contain"
