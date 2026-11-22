@@ -11,7 +11,7 @@ const stories = [
       "Thanks to SHA, our village now has access to clean water. It has made a huge difference in our daily lives.",
     attribution: "Community Member, Sindh",
     image:
-      "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=700&auto=format&fit=crop",
+      "/images/stories3.jpg",
     alt: "Children in a community",
   },
   {
@@ -19,7 +19,7 @@ const stories = [
       "The support we received brought relief to our family when we needed it most. We are truly grateful.",
     attribution: "Community Member, Pakistan",
     image:
-      "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=700&auto=format&fit=crop",
+      "/images/stories2.jpg",
     alt: "Community members gathered together",
   },
   {
@@ -27,7 +27,7 @@ const stories = [
       "Having access to essential support gives our community hope for a better future.",
     attribution: "Community Member, Pakistan",
     image:
-      "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&auto=format&fit=crop",
+      "/images/stories1.jpg",
     alt: "Children in a community setting",
   },
 ];

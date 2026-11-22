@@ -42,7 +42,7 @@ const campaigns = [
     title: "Korangi Distribution",
     description:
       "Reaching families in Korangi with essential supplies and practical community assistance.",
-    image: "/images/korangi-distribution.jpg",
+    image: "/images/korangi-distribution.jfif",
     raised: 3100,
     goal: 6000,
   },
@@ -171,11 +171,11 @@ export default function FeaturedCampaignsSection() {
             <div className="mt-7">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-semibold text-[#073d29]">
-                  ${campaign.raised.toLocaleString("en-US")} raised
+                  PKR {campaign.raised.toLocaleString("en-US")} raised
                 </p>
 
                 <p className="text-xs text-[#69716c]">
-                  ${campaign.goal.toLocaleString("en-US")} goal
+                  PKR {campaign.goal.toLocaleString("en-US")} goal
                 </p>
               </div>
 
@@ -191,13 +191,13 @@ export default function FeaturedCampaignsSection() {
                 <div
                   className="h-full rounded-full bg-[#083b32] transition-[width] duration-[1200ms] ease-out"
                   style={{
-                    width: `${animatedProgress}%`,
+                    width: `PKR {animatedProgress}%`,
                   }}
                 />
               </div>
 
               <p className="mt-2 text-[10px] text-[#858b83]">
-                ${(campaign.goal - campaign.raised).toLocaleString("en-US")}{" "}
+                PKR {(campaign.goal - campaign.raised).toLocaleString("en-US")}{" "}
                 remaining
               </p>
             </div>

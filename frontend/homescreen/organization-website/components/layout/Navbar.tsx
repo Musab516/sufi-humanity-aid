@@ -20,7 +20,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#e8e1d3] bg-[#f5f2e9]">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#073d29]">
       <nav className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
 
         {/* Logo */}
@@ -29,7 +29,7 @@ export default function Navbar() {
           className="relative h-[58px] w-[145px] shrink-0 sm:w-[175px]"
         >
           <Image
-            src="/images/logo-transparent.png"
+            src="/images/logo2.jpg"
             alt="Sufi Humanity Aid International"
             fill
             priority
@@ -52,22 +52,19 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className={`relative py-2 text-[13px] font-medium transition-colors duration-200
-                  ${
-                    isActive
-                      ? "text-[#b89a55]"
-                      : "text-[#073d29] hover:text-[#b89a55]"
-                  }
-                  after:absolute after:bottom-0 after:left-0 after:h-[1.5px]
-                  after:bg-[#b89a55] after:transition-all after:duration-300
-                  ${
-                    isActive
-                      ? "after:w-full"
-                      : "after:w-0 hover:after:w-full"
-                  }
-                `}
+                className={`group relative py-2 font-medium text-[13px] transition-colors duration-200 ${
+                  isActive
+                    ? "text-[#d8b85c]"
+                    : "text-[#f5f2e9] hover:text-[#d8b85c]"
+                }`}
               >
                 {link.label}
+
+                <span
+                  className={`absolute bottom-0 left-0 h-[1.5px] bg-[#d8b85c] transition-all duration-300 ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
               </Link>
             );
           })}
@@ -80,7 +77,7 @@ export default function Navbar() {
           <button
             type="button"
             aria-label="Search"
-            className="text-[#b89a55] transition hover:text-[#073d29]"
+            className="text-[#d8b85c] transition-all duration-200 hover:scale-110 hover:text-[#f5f2e9]"
           >
             <Search size={21} strokeWidth={1.5} />
           </button>
@@ -88,12 +85,12 @@ export default function Navbar() {
           {/* Donate Button */}
           <Link
             href="/#donate"
-            className="inline-flex items-center gap-2 rounded-full bg-[#d2b166] px-5 py-3 text-[12px] font-semibold text-[#073d29] transition hover:bg-[#c4a052]"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#d2b166] px-5 py-3 text-[12px] font-semibold text-[#073d29] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e0c27a] hover:shadow-md"
           >
             <HandHeart
               size={17}
               strokeWidth={2}
-              className="text-[#073d29]"
+              className="transition-transform duration-300 group-hover:scale-110"
             />
             Donate Now
           </Link>
@@ -105,7 +102,7 @@ export default function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
-          className="flex h-10 w-10 items-center justify-center text-[#073d29] lg:hidden"
+          className="flex h-10 w-10 items-center justify-center text-[#f5f2e9] transition-colors duration-200 hover:text-[#d8b85c] lg:hidden"
         >
           {menuOpen ? <X size={25} /> : <Menu size={25} />}
         </button>
@@ -113,7 +110,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {menuOpen && (
-        <div className="border-t border-[#e8e1d3] bg-[#f5f2e9] px-6 py-5 lg:hidden">
+        <div className="border-t border-white/10 bg-[#073d29] px-6 py-5 lg:hidden">
           <div className="flex flex-col gap-5">
             {links.map((link) => {
               const isActive =
@@ -127,10 +124,10 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`w-fit border-b pb-1 text-sm font-medium transition ${
+                  className={`w-fit border-b pb-1 text-sm font-medium transition-colors duration-200 ${
                     isActive
-                      ? "border-[#b89a55] text-[#b89a55]"
-                      : "border-transparent text-[#073d29]"
+                      ? "border-[#d8b85c] text-[#d8b85c]"
+                      : "border-transparent text-[#f5f2e9] hover:border-[#d8b85c] hover:text-[#d8b85c]"
                   }`}
                 >
                   {link.label}
@@ -141,7 +138,7 @@ export default function Navbar() {
             <Link
               href="/#donate"
               onClick={() => setMenuOpen(false)}
-              className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-[#d2b166] px-6 py-3 text-sm font-semibold text-[#073d29] transition hover:bg-[#c4a052]"
+              className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-[#d2b166] px-6 py-3 text-sm font-semibold text-[#073d29] transition-all duration-300 hover:bg-[#e0c27a]"
             >
               <HandHeart size={18} strokeWidth={2} />
               Donate Now

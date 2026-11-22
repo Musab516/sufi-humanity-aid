@@ -2,8 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const initiatives = [
   {
@@ -34,7 +33,7 @@ const initiatives = [
     id: 5,
     title: "Korangi Distribution",
     description: "Delivering essential supplies to local families.",
-    image: "/images/korangi-distribution.jpg",
+    image: "/images/korangi-distribution.jfif",
   },
   {
     id: 6,
@@ -45,96 +44,125 @@ const initiatives = [
 ];
 
 export default function OurWorkSection() {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
-  const scrollCarousel = (direction: "left" | "right") => {
-    if (!carouselRef.current) return;
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
 
-    const distance = carouselRef.current.clientWidth * 0.75;
+    const updateMotionPreference = () => {
+      setIsReducedMotion(mediaQuery.matches);
+    };
 
-    carouselRef.current.scrollBy({
-      left: direction === "right" ? distance : -distance,
-      behavior: "smooth",
-    });
-  };
+    updateMotionPreference();
+    mediaQuery.addEventListener("change", updateMotionPreference);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateMotionPreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+
+    if (!track || isPaused || isReducedMotion) return;
+
+    let animationFrame: number;
+    let previousTime = 0;
+    let position = 0;
+
+    const animate = (timestamp: number) => {
+      if (!previousTime) previousTime = timestamp;
+
+      const delta = timestamp - previousTime;
+      previousTime = timestamp;
+
+      // Continuous movement speed: 24 pixels per second
+      position += (24 * delta) / 1000;
+
+      const loopWidth = track.scrollWidth / 2;
+
+      if (loopWidth > 0 && position >= loopWidth) {
+        position -= loopWidth;
+      }
+
+      track.style.transform = `translate3d(-${position}px, 0, 0)`;
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isPaused, isReducedMotion]);
+
+  const repeatedInitiatives = [...initiatives, ...initiatives];
 
   return (
-    <section className="w-full bg-[#f5f2e9] px-8 py-14 sm:px-12 md:px-16 md:py-16 lg:px-20 xl:px-24">
+    <section className="w-full overflow-hidden bg-[#f5f2e9] px-8 py-14 sm:px-12 md:px-16 md:py-16 lg:px-20 xl:px-24">
       <div className="mx-auto max-w-7xl">
 
-        {/* Section heading and arrows */}
-        <div className="mb-8 flex items-end justify-between gap-5">
-          <div>
-            <h2
-              className="text-2xl font-semibold tracking-tight text-[#073d29] sm:text-3xl"
-              style={{
-                fontFamily: "var(--font-libre-franklin), sans-serif",
-              }}
-            >
-              Our Initiatives
-            </h2>
-          </div>
-
-          {/* Carousel controls */}
-          <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={() => scrollCarousel("left")}
-              aria-label="Previous initiatives"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#073d29]/25 text-[#073d29] transition hover:bg-[#073d29] hover:text-white"
-            >
-              <ArrowLeft size={16} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollCarousel("right")}
-              aria-label="Next initiatives"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#073d29] text-white transition hover:bg-[#b89a55]"
-            >
-              <ArrowRight size={16} />
-            </button>
-          </div>
+        <div className="mb-8">
+          <h2
+            className="text-2xl font-semibold tracking-tight text-[#073d29] sm:text-3xl"
+            style={{
+              fontFamily: "var(--font-libre-franklin), sans-serif",
+            }}
+          >
+            Our Initiatives
+          </h2>
         </div>
 
-        {/* Initiatives carousel */}
         <div
-          ref={carouselRef}
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocusCapture={() => setIsPaused(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+              setIsPaused(false);
+            }
+          }}
         >
-          {initiatives.map((initiative) => (
-            <article
-              key={initiative.id}
-              className="w-[82%] shrink-0 snap-start sm:w-[47%] lg:w-[calc((100%-60px)/4)]"
-            >
-              {/* Image */}
-              <div className="group relative aspect-[4/3] overflow-hidden rounded-sm bg-[#e5e1d7]">
-                <Image
-                  src={initiative.image}
-                  alt={initiative.title}
-                  fill
-                  sizes="(max-width: 640px) 82vw, (max-width: 1024px) 47vw, 25vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-              </div>
+          <div
+            ref={trackRef}
+            className="flex w-max gap-5 will-change-transform"
+          >
+            {repeatedInitiatives.map((initiative, index) => (
+              <article
+                key={`${initiative.id}-${index}`}
+                className="w-[280px] shrink-0 sm:w-[320px] lg:w-[calc((min(100vw-10rem,80rem)-60px)/4)]"
+              >
+                <div className="group relative aspect-[4/3] overflow-hidden rounded-sm bg-[#e5e1d7]">
+                  <Image
+                    src={initiative.image}
+                    alt={initiative.title}
+                    fill
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                </div>
 
-              {/* Initiative information */}
-              <div className="pt-4">
-                <h3
-                  className="text-base font-semibold leading-snug text-[#073d29] sm:text-lg"
-                  style={{
-                    fontFamily: "var(--font-libre-franklin), sans-serif",
-                  }}
-                >
-                  {initiative.title}
-                </h3>
+                <div className="pt-4">
+                  <h3
+                    className="text-base font-semibold leading-snug text-[#073d29] sm:text-lg"
+                    style={{
+                      fontFamily: "var(--font-libre-franklin), sans-serif",
+                    }}
+                  >
+                    {initiative.title}
+                  </h3>
 
-                <p className="mt-2 text-xs leading-5 text-[#69716c]">
-                  {initiative.description}
-                </p>
-              </div>
-            </article>
-          ))}
+                  <p className="mt-2 text-xs leading-5 text-[#69716c]">
+                    {initiative.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
 
       </div>
