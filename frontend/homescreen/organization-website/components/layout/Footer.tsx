@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full bg-[#073d29] text-white">
 
       {/* Main Footer */}
-      <div className="mx-auto max-w-7xl px-6 py-12 md:px-12">
+      <div className="mx-auto max-w-7xl px-8 py-12 sm:px-12 md:px-16 lg:px-20 xl:px-24">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
           {/* Logo / About */}
@@ -136,7 +136,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-5 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between md:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-8 py-5 text-sm text-white/70 sm:px-12 md:px-16 lg:flex-row lg:items-center lg:justify-between lg:px-20 xl:px-24">
           <p>
             © 2026 Sufi Humanity Aid International. All rights reserved.
           </p>
